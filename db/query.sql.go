@@ -9,13 +9,13 @@ import (
 	"context"
 )
 
-const getPostAndReturnId = `-- name: GetPostAndReturnId :one
+const getPost = `-- name: GetPost :one
 SELECT id, thread_id, author_id, created_at, updated_at FROM posts
 WHERE id = $1 LIMIT 1
 `
 
-func (q *Queries) GetPostAndReturnId(ctx context.Context, id int64) (Post, error) {
-	row := q.db.QueryRow(ctx, getPostAndReturnId, id)
+func (q *Queries) GetPost(ctx context.Context, id int64) (Post, error) {
+	row := q.db.QueryRow(ctx, getPost, id)
 	var i Post
 	err := row.Scan(
 		&i.ID,
@@ -27,13 +27,13 @@ func (q *Queries) GetPostAndReturnId(ctx context.Context, id int64) (Post, error
 	return i, err
 }
 
-const getThreadAndReturnId = `-- name: GetThreadAndReturnId :one
+const getThread = `-- name: GetThread :one
 SELECT id, title, author_id, created_at, updated_at FROM threads
 WHERE id = $1 LIMIT 1
 `
 
-func (q *Queries) GetThreadAndReturnId(ctx context.Context, id int64) (Thread, error) {
-	row := q.db.QueryRow(ctx, getThreadAndReturnId, id)
+func (q *Queries) GetThread(ctx context.Context, id int64) (Thread, error) {
+	row := q.db.QueryRow(ctx, getThread, id)
 	var i Thread
 	err := row.Scan(
 		&i.ID,
@@ -45,13 +45,13 @@ func (q *Queries) GetThreadAndReturnId(ctx context.Context, id int64) (Thread, e
 	return i, err
 }
 
-const getUserAndReturnId = `-- name: GetUserAndReturnId :one
+const getUser = `-- name: GetUser :one
 SELECT id, username, password, created_at, updated_at FROM users
 WHERE id = $1 LIMIT 1
 `
 
-func (q *Queries) GetUserAndReturnId(ctx context.Context, id int64) (User, error) {
-	row := q.db.QueryRow(ctx, getUserAndReturnId, id)
+func (q *Queries) GetUser(ctx context.Context, id int64) (User, error) {
+	row := q.db.QueryRow(ctx, getUser, id)
 	var i User
 	err := row.Scan(
 		&i.ID,
